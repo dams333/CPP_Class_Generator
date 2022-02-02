@@ -113,7 +113,12 @@ export function activate(context: ExtensionContext) {
 						text += "# include <iostream>\n";
 						text += "# include <string>\n\n";
 						text += "class " + message.className + "\n{\n";
-						text += "\tpublic:\n\t\t\n";
+						text += "\tpublic:\n";
+						text += "\t\t" + message.className + "();\n";
+						text += "\t\t" + message.className + "(const " + message.className + " &copy);\n";
+						text += "\t\t~" + message.className + "();\n";
+						text += "\t\t" + message.className + " &operator=(const " + message.className + " &assign);\n";
+						text += "\n";
 						text += "\tprivate:\n\t\t\n";
 						text += "};\n\n";
 						text += "#endif";
