@@ -148,9 +148,9 @@ function getGuiHtml() {
 		<form id="generation-form">
 			<label class="label">Class name:</label> <br />
 			<input type="text" class="input" id="className" placeholder="ClassName"/><br />
+			<div class="button2" onclick="addField()">Add a field</div>
 			<div id="fields">
 			</div>
-			<div class="button2" onclick="addField()">Add a field</div>
 			<div class="button" onclick="generate()">Generate</div>
 		</form>
 		<script>
