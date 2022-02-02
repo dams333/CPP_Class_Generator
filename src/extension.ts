@@ -304,7 +304,6 @@ export function activate(context: ExtensionContext) {
 								return vscode.workspace.applyEdit(edit).then(success => {
 									if (success) {
 										document.save();
-										vscode.window.showInformationMessage('HPP created !');
 									} else {
 										vscode.window.showErrorMessage('Error during HPP creation !');
 									}
@@ -381,7 +380,6 @@ export function activate(context: ExtensionContext) {
 								return vscode.workspace.applyEdit(edit).then(success => {
 									if (success) {
 										document.save();
-										vscode.window.showInformationMessage('CPP created !');
 									} else {
 										vscode.window.showErrorMessage('Error during CPP creation !');
 									}
@@ -393,7 +391,7 @@ export function activate(context: ExtensionContext) {
 					{
 						console.error("Impossible to localise user");
 					}
-
+					vscode.window.showInformationMessage('Files created !');
 					return;
 				}
 			},
