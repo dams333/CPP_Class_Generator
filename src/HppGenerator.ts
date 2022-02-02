@@ -12,7 +12,7 @@ export function getHppConstructors(message: any)
 			{
 				text += ", ";
 			}
-		text += message.fields[i].field_type + " " + message.fields[i].field_name;
+			text += message.fields[i].field_type + " " + message.fields[i].field_name;
 		}
 		text += ");\n";
 	}
