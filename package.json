@@ -1,6 +1,6 @@
 {
 	"name": "42CppClassGenerator",
-	"displayName": "OrthodoxCanonicalFormClassGenerator",
+	"displayName": "42 C++ Orthodox Canonical Form Class Generator",
 	"description": "Automatic generation of C++ classes in orthodox canonical form for 42's projects",
 	"version": "0.0.1",
 	"engines": {
@@ -17,7 +17,7 @@
 		"commands": [
 			{
 				"command": "42CppClassGenerator.openPannel",
-				"title": "C++ class generator pannel"
+				"title": "Open C++ orthodox canonical class generator"
 			}
 		]
 	},
