@@ -283,7 +283,7 @@ export function activate(context: ExtensionContext) {
 								text += "\t\t\n\t\t// Getters / Setters\n";
 								for(let i = 0; i < message.fields.length; i++)
 								{
-									text += "\t\t" + message.fields[i].field_type + " get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "();\n";
+									text += "\t\t" + message.fields[i].field_type + " get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "() const;\n";
 									text += "\t\tvoid set" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "(" + message.fields[i].field_type + " " + message.fields[i].field_name + ");\n";
 								}
 							}
@@ -313,10 +313,67 @@ export function activate(context: ExtensionContext) {
 						}
 						{
 							let text = "#include \"" + message.className + ".hpp\"\n\n";
+							text += "// Constructors\n";
 							text += message.className + "::" + message.className + "()\n{\n";
-							text += "\t\n";
+							for(let i = 0; i < message.fields.length; i++)
+							{
+								text += "\t" + "_" + message.fields[i].field_name + " = ;\n";
+							}
 							text += "}\n\n";
-
+							text += message.className + "::" + message.className + "(const " + message.className + " &copy)\n{\n";
+							if(message.fields.length === 0)
+							{
+								text += "\t(void) copy;\n";
+							}
+							for(let i = 0; i < message.fields.length; i++)
+							{
+								text += "\t" + "_" + message.fields[i].field_name + " = copy.get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "();\n";
+							}
+							text += "}\n\n";
+							if(message.fields.length > 0)
+							{
+								text +=  message.className + "::" + message.className + "(";
+								for(let i = 0; i < message.fields.length; i++)
+								{
+									if(i !== 0)
+									{
+										text += ", ";
+									}
+									text += message.fields[i].field_type + " " + message.fields[i].field_name;
+								}
+								text += ")\n{\n";
+								for(let i = 0; i < message.fields.length; i++)
+								{
+									text += "\t" + "_" + message.fields[i].field_name + " = " +  message.fields[i].field_name + ";\n";
+								}
+								text += "}\n\n";
+							}
+							text += "\n// Destructor\n";
+							text += message.className + "::" + "~" + message.className + "()\n{\n";
+							text += "}\n\n";
+							text += "\n// Operators\n";
+							text += message.className + " & " + message.className + "::operator=(const " + message.className + " &assign)\n{\n";
+							if(message.fields.length === 0)
+							{
+								text += "\t(void) assign;\n";
+							}
+							for(let i = 0; i < message.fields.length; i++)
+							{
+								text += "\t" + "_" + message.fields[i].field_name + " = assign.get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "();\n";
+							}
+							text += "\treturn *this;\n}\n\n";
+							if(message.fields.length > 0)
+							{
+								text += "\n// Getters / Setters\n";
+								for(let i = 0; i < message.fields.length; i++)
+								{
+									text += message.fields[i].field_type + " " + message.className + "::get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "() const\n{\n";
+									text += "\treturn _" + message.fields[i].field_name + ";\n}\n";
+									text += "void " + message.className + "::set" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "(" + message.fields[i].field_type + " " + message.fields[i].field_name + ")\n{\n";
+									text += "\t_" + message.fields[i].field_name + " = " + message.fields[i].field_name + ";\n}\n\n";
+								}
+							}
+							
 							const newFile = vscode.Uri.parse('untitled:' + path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, message.className + ".cpp"));
 							vscode.workspace.openTextDocument(newFile).then(document => {
 								const edit = new vscode.WorkspaceEdit();
