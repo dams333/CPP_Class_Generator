@@ -1,235 +1,20 @@
-import { commands, ExtensionContext, Position, ViewColumn, WebviewPanel, window } from 'vscode';
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { getGuiHtml } from './GuiGenerator';
+import { getHppConstructors, getHppDestructors, getHppOperators, getHppGettersSetters, getHppPrivate } from './HppGenerator';
+import { getCppConstructors, getCppDestructors, getCppOperators, getCppGettersSetters } from './CppGenerators';
 
-function getGuiHtml() {
-    let guiHTML =  `
-    <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>C++ Class Generators</title>
-            <style>
-			body{
-				background-color:#17202A;
-				color: #FFFFFF;
-				font-family: Arial, Helvetica, sans-serif;
-			}
-			.button {
-				background-color: Transparent;
-				background-repeat:no-repeat;
-				border: none;
-				cursor:pointer;
-				overflow: absolute;
-				outline:none;
-				padding: 12px;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 12px;
-				margin: 4px 2px;
-				transition-duration: 0.4s;
-				width:200px;
-				margin-top: 30px;
-				margin-left: calc(50% - 100px);
-				color:white;
-				border: 2px solid #008CBA;
-			}
-			.button:hover{
-				background-color: #008CBA;
-				color: black;
-			}
-			.button2 {
-				background-color: Transparent;
-				background-repeat:no-repeat;
-				border: none;
-				cursor:pointer;
-				overflow: absolute;
-				outline:none;
-				padding: 12px;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 12px;
-				margin: 4px 2px;
-				transition-duration: 0.4s;
-				width:150px;
-				margin-top: 30px;
-				margin-left: calc(50% - 75px);
-				color:white;
-				border: 2px solid #008CBA;
-			}
-			.button2:hover{
-				background-color: #008CBA;
-				color: black;
-			}
-			.input{
-				background-color: Transparent;
-				background-repeat:no-repeat;
-				border: 1px solid #008CBA;
-				color: #ffffff;
-				overflow: absolute;
-				outline:none;
-				padding: 12px;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 22px;
-				width: 300px;
-				margin-left: calc(50% - 150px);
-				margin-top: 5px;
-				height: 12px;
-				margin-bottom: 10px;
-			}
-			.type-input{
-				background-color: Transparent;
-				background-repeat:no-repeat;
-				border: 1px solid #008CBA;
-				color: #ffffff;
-				overflow: absolute;
-				outline:none;
-				padding: 12px;
-				text-align: center;
-				text-decoration: none;
-				display: inline;
-				font-size: 22px;
-				width: 100px;
-				margin-top: 5px;
-				height: 12px;
-				margin-bottom: 10px;
-				margin-left: 30%;
-			}
-			.name-input{
-				background-color: Transparent;
-				background-repeat:no-repeat;
-				border: 1px solid #008CBA;
-				color: #ffffff;
-				overflow: absolute;
-				outline:none;
-				padding: 12px;
-				text-align: center;
-				text-decoration: none;
-				display: inline;
-				font-size: 22px;
-				width: 300px;
-				margin-top: 5px;
-				height: 12px;
-				margin-bottom: 10px;
-				margin-left: 50px;
-			}
-			.label{
-				color: #ffffff;
-				text-align: center;
-				font-family: "Arial";
-				font-size: 17px;
-				margin-left: calc(50% - 150px);
-				margin-top: 20px;
-			}
-			.label2{
-				color: #ffffff;
-				text-align: center;
-				font-family: "Arial";
-				font-size: 17px;
-				margin-left: 30%;
-				margin-top: 20px;
-			}
-			.label3{
-				color: #ffffff;
-				text-align: center;
-				font-family: "Arial";
-				font-size: 17px;
-				margin-left: 100px;
-				margin-top: 20px;
-			}
-		</style>
-	</head>
-	<body>
-		<form id="generation-form">
-			<label class="label">Class name:</label> <br />
-			<input type="text" class="input" id="className" placeholder="ClassName"/><br />
-			<div class="button2" onclick="addField()">Add a field</div>
-			<div id="fields">
-			</div>
-			<div class="button" onclick="generate()">Generate</div>
-		</form>
-		<script>
-			let field = 0;
-			const vscode = acquireVsCodeApi();
-			function generate() {
-				let fieldsList = [];
-				if(document.getElementById("className").value == ""){
-					vscode.postMessage({
-						type: 'error'
-					});
-					return ;
-				}
-				for(let i = 0; i < field; i++){
-					if(document.getElementById("field_type_" + i).value == "" && document.getElementById("field_name_" + i).value == "")
-					{
-						continue;
-					}
-					if(document.getElementById("field_type_" + i).value == "" || document.getElementById("field_name_" + i).value == "")
-					{
-						vscode.postMessage({
-							type: 'error2'
-						});
-						return ;
-					}
-					fieldsList[i] = {field_type: document.getElementById("field_type_" + i).value, field_name: document.getElementById("field_name_" + i).value};
-				}
-				vscode.postMessage({
-					type: "generate",
-					className: document.getElementById('className').value,
-					fields: fieldsList
-				});
-			}
-			function addField() {
-				let div = document.createElement("div");
-				div.className = "field";
-				document.getElementById('fields').appendChild(div);
-				let label = document.createElement("label");
-				label.className = "label2";
-				label.innerHTML = "Field type:";
-				div.appendChild(label);
-				label = document.createElement("label");
-				label.className = "label3";
-				label.innerHTML = "Field name:";
-				div.appendChild(label);
-				let br = document.createElement("br");
-				div.appendChild(br);
-				let type = document.createElement("input");
-				type.className = "type-input";
-				type.type = "text";
-				type.id = "field_type_" + field;
-				type.placeholder = "Field type";
-				div.appendChild(type);
-				let name = document.createElement("input");
-				name.className = "name-input";
-				name.type = "text";
-				name.id = "field_name_" + field;
-				name.placeholder = "Field name";
-				div.appendChild(name);
-				field++;
-			}
-		</script>
-	</body>
-</html>
-    `;
-    return guiHTML;
-}
-
-export function activate(context: ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
 
 	console.log('42CppClassGenerator is now active!');
 
-	let command = commands.registerCommand('42CppClassGenerator.openPannel', () => {
-		let editor = window.activeTextEditor!;
-		let onePanel: WebviewPanel;
-		onePanel = window.createWebviewPanel(
+	let command = vscode.commands.registerCommand('42CppClassGenerator.openPannel', () => {
+		let editor = vscode.window.activeTextEditor!;
+		let onePanel: vscode.WebviewPanel;
+		onePanel = vscode.window.createWebviewPanel(
 			'cppgenerator',
 			'Class Generator',
-			{ viewColumn: ViewColumn.One, preserveFocus: true },
+			{ viewColumn: vscode.ViewColumn.One, preserveFocus: true },
 			{
 				enableScripts: true,
 			}
@@ -257,41 +42,13 @@ export function activate(context: ExtensionContext) {
 							text += "# include <string>\n\n";
 							text += "class " + message.className + "\n{\n";
 							text += "\tpublic:\n";
-							text += "\t\t// Constructors\n";
-							text += "\t\t" + message.className + "();\n";
-							text += "\t\t" + message.className + "(const " + message.className + " &copy);\n";
-							if(message.fields.length > 0)
-							{
-								text += "\t\t" + message.className + "(";
-								for(let i = 0; i < message.fields.length; i++)
-								{
-									if(i !== 0)
-									{
-										text += ", ";
-									}
-									text += message.fields[i].field_type + " " + message.fields[i].field_name;
-								}
-								text += ");\n";
-							}	
-							text += "\t\t\n\t\t// Destructor\n";
-							text += "\t\t~" + message.className + "();\n";
-							text += "\t\t\n\t\t// Operators\n";
-							text += "\t\t" + message.className + " & operator=(const " + message.className + " &assign);\n";
-							if(message.fields.length > 0)
-							{
-								text += "\t\t\n\t\t// Getters / Setters\n";
-								for(let i = 0; i < message.fields.length; i++)
-								{
-									text += "\t\t" + message.fields[i].field_type + " get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "() const;\n";
-									text += "\t\tvoid set" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "(" + message.fields[i].field_type + " " + message.fields[i].field_name + ");\n";
-								}
-							}
+							text += getHppConstructors(message);
+							text += getHppDestructors(message);
+							text += getHppOperators(message);
+							text += getHppGettersSetters(message);
 							text += "\t\t\n";
 							text += "\tprivate:\n";
-							for(let i = 0; i < message.fields.length; i++)
-							{
-								text += "\t\t" + message.fields[i].field_type + " _" + message.fields[i].field_name + ";\n";
-							}
+							text += getHppPrivate(message);
 							text += "\t\t\n";
 							text += "};\n\n";
 							text += "#endif";
@@ -311,66 +68,10 @@ export function activate(context: ExtensionContext) {
 						}
 						{
 							let text = "#include \"" + message.className + ".hpp\"\n\n";
-							text += "// Constructors\n";
-							text += message.className + "::" + message.className + "()\n{\n";
-							for(let i = 0; i < message.fields.length; i++)
-							{
-								text += "\t" + "_" + message.fields[i].field_name + " = ;\n";
-							}
-							text += "}\n\n";
-							text += message.className + "::" + message.className + "(const " + message.className + " &copy)\n{\n";
-							if(message.fields.length === 0)
-							{
-								text += "\t(void) copy;\n";
-							}
-							for(let i = 0; i < message.fields.length; i++)
-							{
-								text += "\t" + "_" + message.fields[i].field_name + " = copy.get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "();\n";
-							}
-							text += "}\n\n";
-							if(message.fields.length > 0)
-							{
-								text +=  message.className + "::" + message.className + "(";
-								for(let i = 0; i < message.fields.length; i++)
-								{
-									if(i !== 0)
-									{
-										text += ", ";
-									}
-									text += message.fields[i].field_type + " " + message.fields[i].field_name;
-								}
-								text += ")\n{\n";
-								for(let i = 0; i < message.fields.length; i++)
-								{
-									text += "\t" + "_" + message.fields[i].field_name + " = " +  message.fields[i].field_name + ";\n";
-								}
-								text += "}\n\n";
-							}
-							text += "\n// Destructor\n";
-							text += message.className + "::" + "~" + message.className + "()\n{\n";
-							text += "}\n\n";
-							text += "\n// Operators\n";
-							text += message.className + " & " + message.className + "::operator=(const " + message.className + " &assign)\n{\n";
-							if(message.fields.length === 0)
-							{
-								text += "\t(void) assign;\n";
-							}
-							for(let i = 0; i < message.fields.length; i++)
-							{
-								text += "\t" + "_" + message.fields[i].field_name + " = assign.get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "();\n";
-							}
-							text += "\treturn *this;\n}\n\n";
-							if(message.fields.length > 0)
-							{
-								text += "\n// Getters / Setters\n";
-								for(let i = 0; i < message.fields.length; i++)
-								{
-									text += message.fields[i].field_type + " " + message.className + "::get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "() const\n{\n";
-									text += "\treturn _" + message.fields[i].field_name + ";\n}\n";
-									text += "void " + message.className + "::set" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "(" + message.fields[i].field_type + " " + message.fields[i].field_name + ")\n{\n";
-									text += "\t_" + message.fields[i].field_name + " = " + message.fields[i].field_name + ";\n}\n\n";
-								}
-							}
+							text += getCppConstructors(message);
+							text += getCppDestructors(message);
+							text += getCppOperators(message);
+							text += getCppGettersSetters(message);
 							
 							const newFile = vscode.Uri.parse('untitled:' + path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, message.className + ".cpp"));
 							vscode.workspace.openTextDocument(newFile).then(document => {
