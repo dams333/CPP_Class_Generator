@@ -9,7 +9,6 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('42CppClassGenerator is now active!');
 
 	let command = vscode.commands.registerCommand('42CppClassGenerator.openPannel', () => {
-		let editor = vscode.window.activeTextEditor!;
 		let onePanel: vscode.WebviewPanel;
 		onePanel = vscode.window.createWebviewPanel(
 			'cppgenerator',
