@@ -258,25 +258,34 @@ export function activate(context: ExtensionContext) {
 							text += "# include <string>\n\n";
 							text += "class " + message.className + "\n{\n";
 							text += "\tpublic:\n";
+							text += "\t\t// Constructors\n";
 							text += "\t\t" + message.className + "();\n";
 							text += "\t\t" + message.className + "(const " + message.className + " &copy);\n";
-							text += "\t\t" + message.className + "(";
-							for(let i = 0; i < message.fields.length; i++)
+							if(message.fields.length > 0)
 							{
-								if(i !== 0)
+								text += "\t\t" + message.className + "(";
+								for(let i = 0; i < message.fields.length; i++)
 								{
-									text += ", ";
+									if(i !== 0)
+									{
+										text += ", ";
+									}
+									text += message.fields[i].field_type + " " + message.fields[i].field_name;
 								}
-								text += message.fields[i].field_type + " " + message.fields[i].field_name;
-							}
-							text += ");\n";
+								text += ");\n";
+							}	
+							text += "\t\t\n\t\t// Destructor\n";
 							text += "\t\t~" + message.className + "();\n";
+							text += "\t\t\n\t\t// Operators\n";
 							text += "\t\t" + message.className + " & operator=(const " + message.className + " &assign);\n";
-							text += "\t\t\n";
-							for(let i = 0; i < message.fields.length; i++)
+							if(message.fields.length > 0)
 							{
-								text += "\t\t" + message.fields[i].field_type + " get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "();\n";
-								text += "\t\tvoid set" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "(" + message.fields[i].field_type + " " + message.fields[i].field_name + ");\n";
+								text += "\t\t\n\t\t// Getters / Setters\n";
+								for(let i = 0; i < message.fields.length; i++)
+								{
+									text += "\t\t" + message.fields[i].field_type + " get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "();\n";
+									text += "\t\tvoid set" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "(" + message.fields[i].field_type + " " + message.fields[i].field_name + ");\n";
+								}
 							}
 							text += "\t\t\n";
 							text += "\tprivate:\n";
