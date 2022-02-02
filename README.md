@@ -1,1 +1,1 @@
-/!\ Currently a prototype
+/!\ Currently a prototype (PR are welcome if you are ready to dive into this code)
