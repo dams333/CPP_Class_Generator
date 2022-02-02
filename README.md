@@ -1,1 +1,1 @@
-This is the firts basic first functional version (PR are welcome if you are ready to dive into this code)
+This is the firts basic functional version (PR are welcome if you are ready to dive into this code)
