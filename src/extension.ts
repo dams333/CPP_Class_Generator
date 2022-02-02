@@ -1,7 +1,6 @@
 import { commands, ExtensionContext, Position, ViewColumn, WebviewPanel, window } from 'vscode';
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { type } from 'os';
 
 function getGuiHtml() {
     let guiHTML =  `
@@ -392,6 +391,7 @@ export function activate(context: ExtensionContext) {
 						console.error("Impossible to localise user");
 					}
 					vscode.window.showInformationMessage('Files created !');
+					onePanel.dispose();
 					return;
 				}
 			},
