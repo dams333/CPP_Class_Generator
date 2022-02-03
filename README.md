@@ -10,7 +10,7 @@
 - Better interface
 - Automaticaly add 42 header
 - Give the choice to generate, or not, the getters/setters
-- Give the choixe to create constructors with only certain fields
+- Give the choice to create constructors with only certain fields
 - Inheritance managing
 - All the features that I find useful ;)
 # Documentation
