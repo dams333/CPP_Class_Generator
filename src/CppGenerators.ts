@@ -6,6 +6,10 @@ export function getCppConstructors(message: any)
 	{
 		text += "\t" + "_" + message.fields[i].field_name + " = ;\n";
 	}
+	if(message.debug)
+	{
+		text += "\tstd::cout << \"\\e[0;33mDefault Constructor called of " + message.className + "\\e[0m\" << std::endl;\n";
+	}
 	text += "}\n\n";
 	text += message.className + "::" + message.className + "(const " + message.className + " &copy)\n{\n";
 	if(message.fields.length === 0)
@@ -15,6 +19,10 @@ export function getCppConstructors(message: any)
 	for(let i = 0; i < message.fields.length; i++)
 	{
 		text += "\t" + "_" + message.fields[i].field_name + " = copy.get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "();\n";
+	}
+	if(message.debug)
+	{
+		text += "\tstd::cout << \"\\e[0;33mCopy Constructor called of " + message.className + "\\e[0m\" << std::endl;\n";
 	}
 	text += "}\n\n";
 	if(message.fields.length > 0)
@@ -33,6 +41,10 @@ export function getCppConstructors(message: any)
 		{
 			text += "\t" + "_" + message.fields[i].field_name + " = " +  message.fields[i].field_name + ";\n";
 		}
+		if(message.debug)
+		{
+			text += "\tstd::cout << \"\\e[0;33mFields Constructor called of " + message.className + "\\e[0m\" << std::endl;\n";
+		}
 		text += "}\n\n";
 	}
 	return text;
@@ -42,6 +54,10 @@ export function getCppDestructors(message: any)
 {
 	let text = "\n// Destructor\n";
 	text += message.className + "::" + "~" + message.className + "()\n{\n";
+	if(message.debug)
+	{
+		text += "\tstd::cout << \"\\e[0;31mDestructor called of " + message.className + "\\e[0m\" << std::endl;\n";
+	}
 	text += "}\n\n";
 	return text;
 }

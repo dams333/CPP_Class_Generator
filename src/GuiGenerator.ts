@@ -138,6 +138,14 @@ export function getGuiHtml() {
 				margin-left: 100px;
 				margin-top: 20px;
 			}
+			.label4{
+				color: #ffffff;
+				text-align: center;
+				font-family: "Arial";
+				font-size: 17px;
+				margin-left: 38%;
+				margin-top: 20px;
+			}
 		</style>
 	</head>
 	<body>
@@ -147,6 +155,8 @@ export function getGuiHtml() {
 			<div class="button2" onclick="addField()">Add a field</div>
 			<div id="fields">
 			</div>
+			<br />
+			<label class="label4">Generate constructor/destructor debug messages: <input type="checkbox" id="generateDebug"/></label>
 			<div class="button" onclick="generate()">Generate</div>
 		</form>
 		<script>
@@ -177,7 +187,8 @@ export function getGuiHtml() {
 				vscode.postMessage({
 					type: "generate",
 					className: document.getElementById('className').value,
-					fields: fieldsList
+					fields: fieldsList,
+					debug: document.getElementById('generateDebug').checked
 				});
 			}
 			function addField() {
