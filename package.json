@@ -1,22 +1,36 @@
 {
-	"name": "42CppClassGenerator",
+	"name": "cppclassgenerator",
 	"displayName": "42 C++ Orthodox Canonical Form Class Generator",
 	"description": "Automatic generation of C++ classes in orthodox canonical form for 42's projects",
-	"version": "0.0.1",
+	"version": "1.0.0",
+	"publisher": "Damien Hubleur",
+	"license: ": "SEE LICENSE IN license.txt",
+	"icon": "resources/logo.png",
 	"engines": {
 		"vscode": "^1.63.0"
 	},
 	"categories": [
-		"Other"
+		"Formatters",
+		"Programming Languages"
+	],
+	"keywords": [
+		"42",
+		"cpp",
+		"c++",
+		"class",
+		"generator",
+		"orthodox",
+		"canonical",
+		"form"
 	],
 	"activationEvents": [
-		"onCommand:42CppClassGenerator.openPannel"
+		"onCommand:cppclassgenerator.openPannel"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "42CppClassGenerator.openPannel",
+				"command": "cppclassgenerator.openPannel",
 				"title": "Open C++ orthodox canonical class generator"
 			}
 		]
