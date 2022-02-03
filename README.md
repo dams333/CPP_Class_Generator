@@ -17,7 +17,7 @@ Until we make the extension cleaner, it is not available directly on VSCode stor
 - You can generate debug message in constructor/destructor if the subject ask it
 ## Example
 ![Pannel](resources/pannel.png)
-* This parameters vill create:
+* This parameters will create:
 	- A MySuperClass.hpp
 ```c
 #ifndef MYSUPERCLASS_HPP
