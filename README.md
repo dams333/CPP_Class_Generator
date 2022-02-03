@@ -1,10 +1,18 @@
 # Table of content
 - [Table of content](#table-of-content)
-- [Documentation](#docuementation)
+- [Road Map](#roadmap)
+- [Documentation](#documentation)
 	- [Installation](#installation)
 	- [Usage](#usage)
 	- [Example](#example)
 - [Contributing](#contributing)
+# RoadMap
+- Better interface
+- Automaticaly add 42 header
+- Give the choice to generate, or not, the getters/setters
+- Give the choixe to create constructors with only certain fields
+- Inheritance managing
+- All the features that I find useful ;)
 # Documentation
 ## Installation
 Until we make the extension cleaner, it is not available directly on VSCode store. To install it, use the commans `code --install-extension 42CppClassGenerator-0.0.1.vsix` with the version you can find in the release. If you want to compile it from the source, you can use `vsce package` command
