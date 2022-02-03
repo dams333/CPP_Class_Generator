@@ -12,6 +12,8 @@
 - Give the choice to generate, or not, the getters/setters
 - Give the choice to create constructors with only certain fields
 - Inheritance managing
+- << Operator overload
+- Class' excpetions
 - All the features that I find useful ;)
 # Documentation
 ## Installation
