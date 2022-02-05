@@ -4,7 +4,7 @@ export function getCppConstructors(message: any)
 	text += message.className + "::" + message.className + "()\n{\n";
 	for(let i = 0; i < message.fields.length; i++)
 	{
-		text += "\t" + "_" + message.fields[i].field_name + " = ;\n";
+		text += "\t" + "_" + message.fields[i].field_name + " = " + message.fields[i].default + ";\n";
 	}
 	if(message.debug)
 	{
@@ -86,10 +86,16 @@ export function getCppGettersSetters(message: any)
 		text += "\n// Getters / Setters\n";
 		for(let i = 0; i < message.fields.length; i++)
 		{
-			text += message.fields[i].field_type + " " + message.className + "::get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "() const\n{\n";
-			text += "\treturn _" + message.fields[i].field_name + ";\n}\n";
-			text += "void " + message.className + "::set" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "(" + message.fields[i].field_type + " " + message.fields[i].field_name + ")\n{\n";
-			text += "\t_" + message.fields[i].field_name + " = " + message.fields[i].field_name + ";\n}\n\n";
+			if(message.fields[i].getter)
+			{
+				text += message.fields[i].field_type + " " + message.className + "::get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "() const\n{\n";
+				text += "\treturn _" + message.fields[i].field_name + ";\n}\n";
+			}
+			if(message.fields[i].setter)
+			{
+				text += "void " + message.className + "::set" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "(" + message.fields[i].field_type + " " + message.fields[i].field_name + ")\n{\n";
+				text += "\t_" + message.fields[i].field_name + " = " + message.fields[i].field_name + ";\n}\n\n";
+			}
 		}
 	}
 	return text;

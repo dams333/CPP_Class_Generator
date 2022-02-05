@@ -182,7 +182,7 @@ export function getGuiHtml() {
 						});
 						return ;
 					}
-					fieldsList[i] = {field_type: document.getElementById("field_type_" + i).value, field_name: document.getElementById("field_name_" + i).value};
+					fieldsList[i] = {field_type: document.getElementById("field_type_" + i).value, field_name: document.getElementById("field_name_" + i).value, default: "", getter: true, setter: false};
 				}
 				vscode.postMessage({
 					type: "generate",

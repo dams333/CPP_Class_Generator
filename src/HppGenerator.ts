@@ -40,8 +40,14 @@ export function getHppGettersSetters(message: any)
 		text += "\t\t\n\t\t// Getters / Setters\n";
 		for(let i = 0; i < message.fields.length; i++)
 		{
-			text += "\t\t" + message.fields[i].field_type + " get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "() const;\n";
-			text += "\t\tvoid set" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "(" + message.fields[i].field_type + " " + message.fields[i].field_name + ");\n";
+			if(message.fields[i].getter)
+			{
+				text += "\t\t" + message.fields[i].field_type + " get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "() const;\n";
+			}
+			if(message.fields[i].setter)
+			{
+				text += "\t\tvoid set" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "(" + message.fields[i].field_type + " " + message.fields[i].field_name + ");\n";
+			}
 		}
 	}
 	return text;
