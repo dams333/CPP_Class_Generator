@@ -17,7 +17,7 @@
 - All the features that I find useful ;)
 # Documentation
 ## Installation
-Until we make the extension cleaner, it is not available directly on VSCode store. To install it, use the commans `code --install-extension 42CppClassGenerator-0.0.1.vsix` with the version you can find in the release. If you want to compile it from the source, you can use `vsce package` command
+Until we make the extension cleaner, it is not available directly on VSCode store. To install it, use the commans `code --install-extension 42CppClassGenerator-0.0.1.vsix` with the version you can find in the release. If you want to compile it from the source, you can use `vsce package --baseContentUrl none --baseImagesUrl none` command
 ## Usage
 - Open the generator pannel with the command `open C++ orthodox canonical class generator`
 - Choose a class name (as `MySuperClass`)
@@ -26,7 +26,7 @@ Until we make the extension cleaner, it is not available directly on VSCode stor
 - Choose a name without the `_` (as `mySuperInt`)
 - You can generate debug message in constructor/destructor if the subject ask it
 ## Example
-![Pannel](resources/pannel.png)
+![Pannel](https://github.com/dams333/CPP_Class_Generator/blob/master/resources/pannel.png)
 * This parameters will create:
 	- A MySuperClass.hpp
 ```c

@@ -6,6 +6,10 @@
 	"publisher": "Damien Hubleur",
 	"license: ": "SEE LICENSE IN license.txt",
 	"icon": "resources/logo.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/dams333/CPP_Class_Generator"
+	},
 	"engines": {
 		"vscode": "^1.63.0"
 	},
@@ -63,7 +67,6 @@
 		"@vscode/test-electron": "^2.0.3"
 	},
 	"dependencies": {
-		"vsce": "^2.6.6",
-		"vscode": "^1.1.37"
+		"vsce": "^2.6.6"
 	}
 }
