@@ -205,7 +205,7 @@ export function getGuiHtml() {
 							defaultValue = document.getElementById("field_default_" + i).value;
 						}
 					}
-					fieldsList[i] = {field_type: document.getElementById("field_type_" + i).value, field_name: document.getElementById("field_name_" + i).value, default: defaultValue, getter: true, setter: false};
+					fieldsList[i] = {field_type: document.getElementById("field_type_" + i).value, field_name: document.getElementById("field_name_" + i).value, default: defaultValue, getter: document.getElementById("field_getter_" + i).checked, setter: document.getElementById("field_setter_" + i).checked};
 				}
 				vscode.postMessage({
 					type: "generate",
@@ -246,6 +246,23 @@ export function getGuiHtml() {
 				test.id = "field_default_" + field;
 				test.placeholder = "Field default value";
 				div.appendChild(test);
+				let sub1 = document.createElement("label");
+				sub1.className = "label4";
+				sub1.innerHTML = "Getter: ";
+				div.appendChild(sub1);
+				let check1 = document.createElement("input");
+				check1.type = "checkbox";
+				check1.id = "field_getter_" + field;
+				check1.defaultChecked = true;
+				sub1.appendChild(check1);
+				let sub2 = document.createElement("label");
+				sub2.className = "label3";
+				sub2.innerHTML = "Setter: ";
+				let check2 = document.createElement("input");
+				check2.type = "checkbox";
+				check2.id = "field_setter_" + field;
+				sub2.appendChild(check2);
+				div.appendChild(sub2);
 				field++;
 			}
 		</script>
