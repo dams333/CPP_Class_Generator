@@ -94,7 +94,7 @@ export function getGuiHtml() {
 				margin-top: 5px;
 				height: 12px;
 				margin-bottom: 10px;
-				margin-left: 30%;
+				margin-left: 20%;
 			}
 			.name-input{
 				background-color: Transparent;
@@ -127,7 +127,7 @@ export function getGuiHtml() {
 				text-align: center;
 				font-family: "Arial";
 				font-size: 17px;
-				margin-left: 30%;
+				margin-left: 20%;
 				margin-top: 20px;
 			}
 			.label3{
@@ -182,7 +182,30 @@ export function getGuiHtml() {
 						});
 						return ;
 					}
-					fieldsList[i] = {field_type: document.getElementById("field_type_" + i).value, field_name: document.getElementById("field_name_" + i).value, default: "", getter: true, setter: false};
+					let defaultValue;
+					if(document.getElementById("field_default_" + i).value == "")
+					{
+						if(document.getElementById("field_type_" + i).value == "std::string" || document.getElementById("field_type_" + i).value == "string")
+						{
+							defaultValue = '\"\"';
+						}
+						else
+						{
+							defaultValue = 0;
+						}
+					}
+					else
+					{
+						if(document.getElementById("field_type_" + i).value == "std::string" || document.getElementById("field_type_" + i).value == "string")
+						{
+							defaultValue = '\"' + document.getElementById("field_default_" + i).value + '\"';
+						}
+						else
+						{
+							defaultValue = document.getElementById("field_default_" + i).value;
+						}
+					}
+					fieldsList[i] = {field_type: document.getElementById("field_type_" + i).value, field_name: document.getElementById("field_name_" + i).value, default: defaultValue, getter: true, setter: false};
 				}
 				vscode.postMessage({
 					type: "generate",
@@ -217,6 +240,12 @@ export function getGuiHtml() {
 				name.id = "field_name_" + field;
 				name.placeholder = "Field name";
 				div.appendChild(name);
+				let test = document.createElement("input");
+				test.className = "name-input";
+				test.type = "text";
+				test.id = "field_default_" + field;
+				test.placeholder = "Field default value";
+				div.appendChild(test);
 				field++;
 			}
 		</script>
