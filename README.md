@@ -9,7 +9,6 @@
 # RoadMap
 - Better interface
 - Automaticaly add 42 header
-- Give the choice to generate, or not, the getters/setters
 - Give the choice to create constructors with only certain fields
 - Inheritance managing
 - << Operator overload
@@ -26,9 +25,10 @@ Until we make the extension cleaner, it is not available directly on VSCode stor
 - Choose a name without the `_` (as `mySuperInt`)
 - You can generate debug message in constructor/destructor if the subject ask it
 ## Example
-![Pannel](https://github.com/dams333/CPP_Class_Generator/blob/master/resources/pannel.png)
-* This parameters will create:
-	- A MySuperClass.hpp
+![Pannel](https://github.com/dams333/CPP_Class_Generator/blob/master/resources/pannel.png?raw=true)
+
+This parameters will create:
+- A MySuperClass.hpp
 ```c
 #ifndef MYSUPERCLASS_HPP
 # define MYSUPERCLASS_HPP
