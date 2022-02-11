@@ -76,6 +76,24 @@
 				height: 12px;
 				margin-bottom: 10px;
 			}
+			.input-format{
+				background-color: Transparent;
+				background-repeat:no-repeat;
+				border: 1px solid #008CBA;
+				color: #ffffff;
+				overflow: absolute;
+				outline:none;
+				padding: 12px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 22px;
+				width: 500px;
+				margin-left: calc(50% - 250px);
+				margin-top: 5px;
+				height: 12px;
+				margin-bottom: 10px;
+			}
 			.type-input{
 				background-color: Transparent;
 				background-repeat:no-repeat;
@@ -152,6 +170,14 @@
 				height: 30px;
 				margin-bottom: 60px;
 			}
+			.label6{
+				color: #ffffff;
+				text-align: center;
+				font-family: "Arial";
+				font-size: 17px;
+				margin-left: calc(50% - 250px);
+				margin-top: 20px;
+			}
 		</style>
 	</head>
 	<body>
@@ -161,6 +187,9 @@
 			<div class="button2" onclick="addField()">Add a field</div>
 			<div id="fields">
 			</div>
+			<br>
+			<label class="label6">Format << operator overload (use ${fieldName} to use field in the format):</label> <br>
+			<input type="text" class="input-format" id="format" placeholder="Format"/><br>
 			<br>
 			<label class="label5">Generate constructor/destructor debug messages: <input type="checkbox" id="generateDebug"/></label>
 			<br>
@@ -218,7 +247,8 @@
 				//	type: "generate",
 				//	className: document.getElementById('className').value,
 				//	fields: fieldsList,
-				//	debug: document.getElementById('generateDebug').checked
+				//	debug: document.getElementById('generateDebug').checked,
+				//	format: document.getElementById('format').value
 				//});
 			}
 			function addField() {
