@@ -101,6 +101,22 @@ export function getCppGettersSetters(message: any)
 	return text;
 }
 
+export function getCppExceptions(message: any)
+{
+	let text = "";
+	if(message.classExceptions.length > 0)
+	{
+		text += "\n\n// Exceptions\n";
+		for(let i = 0; i < message.classExceptions.length; i++)
+		{
+			text += "const char * " + message.className + "::" + message.classExceptions[i].exception_name + "::what() const throw()\n{\n";
+			text += "\treturn \"" + message.classExceptions[i].exception_what + "\";\n}\n";
+		}
+	}
+	return text;
+}
+
+
 export function getCppStreamOperator(message: any)
 {
 	let text = "";

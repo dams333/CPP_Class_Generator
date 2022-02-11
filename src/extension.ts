@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { getGuiHtml } from './GuiGenerator';
-import { getHppConstructors, getHppDestructors, getHppOperators, getHppGettersSetters, getHppPrivate, getHppStreamOperator } from './HppGenerator';
-import { getCppConstructors, getCppDestructors, getCppOperators, getCppGettersSetters, getCppStreamOperator } from './CppGenerators';
+import { getHppConstructors, getHppDestructors, getHppOperators, getHppGettersSetters, getHppPrivate, getHppStreamOperator, getHppExceptions } from './HppGenerator';
+import { getCppConstructors, getCppDestructors, getCppOperators, getCppGettersSetters, getCppStreamOperator, getCppExceptions } from './CppGenerators';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -49,6 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
 							text += getHppDestructors(message);
 							text += getHppOperators(message);
 							text += getHppGettersSetters(message);
+							text += getHppExceptions(message);
 							text += "\t\t\n";
 							text += "\tprivate:\n";
 							text += getHppPrivate(message);
@@ -76,6 +77,7 @@ export function activate(context: vscode.ExtensionContext) {
 							text += getCppDestructors(message);
 							text += getCppOperators(message);
 							text += getCppGettersSetters(message);
+							text += getCppExceptions(message);
 							text += getCppStreamOperator(message);
 							
 							const newFile = vscode.Uri.parse('untitled:' + path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, message.className + ".cpp"));

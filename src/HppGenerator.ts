@@ -32,6 +32,7 @@ export function getHppOperators(message: any)
 	text += "\t\t" + message.className + " & operator=(const " + message.className + " &assign);\n";
 	return text;
 }
+
 export function getHppGettersSetters(message: any)
 {
 	let text = "";
@@ -48,6 +49,22 @@ export function getHppGettersSetters(message: any)
 			{
 				text += "\t\tvoid set" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "(" + message.fields[i].field_type + " " + message.fields[i].field_name + ");\n";
 			}
+		}
+	}
+	return text;
+}
+
+export function getHppExceptions(message: any)
+{
+	let text = "";
+	if(message.classExceptions.length > 0)
+	{
+		text += "\t\t\n\t\t// Exceptions\n";
+		for(let i = 0; i < message.classExceptions.length; i++)
+		{
+			text += "\t\tclass " + message.classExceptions[i].exception_name + " : public std::exception {\n";
+			text += "\t\t\tvirtual const char* what() const throw();\n";
+			text += "\t\t};\n";
 		}
 	}
 	return text;

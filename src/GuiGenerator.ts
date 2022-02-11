@@ -369,7 +369,7 @@ export function getGuiHtml() {
 				let type = document.createElement("input");
 				type.className = "type-input";
 				type.type = "text";
-				type.id = "eception_name_" + exception;
+				type.id = "exception_name_" + exception;
 				type.placeholder = "Name";
 				div.appendChild(type);
 				let name = document.createElement("input");
