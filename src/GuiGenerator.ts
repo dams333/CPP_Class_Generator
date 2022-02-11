@@ -78,6 +78,24 @@ export function getGuiHtml() {
 				height: 12px;
 				margin-bottom: 10px;
 			}
+			.input-format{
+				background-color: Transparent;
+				background-repeat:no-repeat;
+				border: 1px solid #008CBA;
+				color: #ffffff;
+				overflow: absolute;
+				outline:none;
+				padding: 12px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 22px;
+				width: 500px;
+				margin-left: calc(50% - 250px);
+				margin-top: 5px;
+				height: 12px;
+				margin-bottom: 10px;
+			}
 			.type-input{
 				background-color: Transparent;
 				background-repeat:no-repeat;
@@ -90,11 +108,9 @@ export function getGuiHtml() {
 				text-decoration: none;
 				display: inline;
 				font-size: 22px;
-				width: 100px;
-				margin-top: 5px;
+				width: 20%;
 				height: 12px;
-				margin-bottom: 10px;
-				margin-left: 20%;
+				margin-left: 0;
 			}
 			.name-input{
 				background-color: Transparent;
@@ -108,11 +124,25 @@ export function getGuiHtml() {
 				text-decoration: none;
 				display: inline;
 				font-size: 22px;
-				width: 300px;
-				margin-top: 5px;
+				width: 30%;
 				height: 12px;
-				margin-bottom: 10px;
-				margin-left: 50px;
+				margin-left: 5%;
+			}
+			.exception-input{
+				background-color: Transparent;
+				background-repeat:no-repeat;
+				border: 1px solid #008CBA;
+				color: #ffffff;
+				overflow: absolute;
+				outline:none;
+				padding: 12px;
+				text-align: center;
+				text-decoration: none;
+				display: inline;
+				font-size: 22px;
+				width: 60%;
+				height: 12px;
+				margin-left: 5%;
 			}
 			.label{
 				color: #ffffff;
@@ -127,7 +157,7 @@ export function getGuiHtml() {
 				text-align: center;
 				font-family: "Arial";
 				font-size: 17px;
-				margin-left: 20%;
+				margin-left: 0;
 				margin-top: 20px;
 			}
 			.label3{
@@ -135,7 +165,7 @@ export function getGuiHtml() {
 				text-align: center;
 				font-family: "Arial";
 				font-size: 17px;
-				margin-left: 100px;
+				margin-left: calc(25% - 50px);
 				margin-top: 20px;
 			}
 			.label4{
@@ -143,25 +173,61 @@ export function getGuiHtml() {
 				text-align: center;
 				font-family: "Arial";
 				font-size: 17px;
-				margin-left: 38%;
+				margin-left: 30%;
+			}
+			.label5{
+				color: #ffffff;
+				font-family: "Arial";
+				font-size: 17px;
+				margin-left: calc(50% - 170px);
+			}
+			.field
+			{
+				width: 60%;
+				margin-left: calc(50% - 30%);
+				height: 30px;
+				margin-bottom: 60px;
+			}
+			.label6{
+				color: #ffffff;
+				text-align: center;
+				font-family: "Arial";
+				font-size: 17px;
+				margin-left: calc(50% - 250px);
+				margin-top: 20px;
+			}
+			.label7{
+				color: #ffffff;
+				text-align: center;
+				font-family: "Arial";
+				font-size: 17px;
+				margin-left: calc(25% - 100px);
 				margin-top: 20px;
 			}
 		</style>
 	</head>
 	<body>
 		<form id="generation-form">
-			<label class="label">Class name:</label> <br />
-			<input type="text" class="input" id="className" placeholder="ClassName"/><br />
+			<label class="label">Class name:</label> <br>
+			<input type="text" class="input" id="className" placeholder="ClassName"/><br>
 			<div class="button2" onclick="addField()">Add a field</div>
 			<div id="fields">
 			</div>
-			<br />
-			<label class="label4">Generate constructor/destructor debug messages: <input type="checkbox" id="generateDebug"/></label>
+			<div class="button2" onclick="addException()">Add a class exception</div>
+			<div id="exceptions">
+			</div>
+			<br>
+			<label class="label6">Operator << overload format (use \${fieldName} to use fields in the format):</label> <br>
+			<input type="text" class="input-format" id="format" placeholder="Format"/><br>
+			<br>
+			<label class="label5">Generate constructor/destructor debug messages: <input type="checkbox" id="generateDebug"/></label>
+			<br>
 			<div class="button" onclick="generate()">Generate</div>
 		</form>
 		<script>
 			let field = 0;
-			const vscode = acquireVsCodeApi();
+			let exception = 0;
+			//const vscode = acquireVsCodeApi();
 			function generate() {
 				let fieldsList = [];
 				if(document.getElementById("className").value == ""){
@@ -207,11 +273,28 @@ export function getGuiHtml() {
 					}
 					fieldsList[i] = {field_type: document.getElementById("field_type_" + i).value, field_name: document.getElementById("field_name_" + i).value, default: defaultValue, getter: document.getElementById("field_getter_" + i).checked, setter: document.getElementById("field_setter_" + i).checked};
 				}
+				let exceptionsList = [];
+				for(let i = 0; i < exception; i++){
+					if(document.getElementById("exception_name_" + i).value == "" && document.getElementById("exception_what_" + i).value == "")
+					{
+						continue;
+					}
+					if(document.getElementById("exception_name_" + i).value == "" || document.getElementById("exception_what_" + i).value == "")
+					{
+						vscode.postMessage({
+							type: 'error3'
+						});
+						return ;
+					}
+					exceptionsList[i] = {exception_name: document.getElementById("exception_name_" + i).value, exception_what: document.getElementById("exception_what_" + i).value};
+				}
 				vscode.postMessage({
 					type: "generate",
 					className: document.getElementById('className').value,
 					fields: fieldsList,
-					debug: document.getElementById('generateDebug').checked
+				  exceptions: exceptionsList,
+					debug: document.getElementById('generateDebug').checked,
+					format: document.getElementById('format').value
 				});
 			}
 			function addField() {
@@ -264,6 +347,34 @@ export function getGuiHtml() {
 				sub2.appendChild(check2);
 				div.appendChild(sub2);
 				field++;
+			}
+			function addException() {
+				let div = document.createElement("div");
+				div.className = "field";
+				document.getElementById('exceptions').appendChild(div);
+				let label = document.createElement("label");
+				label.className = "label2";
+				label.innerHTML = "Exception name:";
+				div.appendChild(label);
+				label = document.createElement("label");
+				label.className = "label7";
+				label.innerHTML = "Exception what():";
+				div.appendChild(label);
+				let br = document.createElement("br");
+				div.appendChild(br);
+				let type = document.createElement("input");
+				type.className = "type-input";
+				type.type = "text";
+				type.id = "eception_name_" + exception;
+				type.placeholder = "Name";
+				div.appendChild(type);
+				let name = document.createElement("input");
+				name.className = "exception-input";
+				name.type = "text";
+				name.id = "exception_what_" + exception;
+				name.placeholder = "what";
+				div.appendChild(name);
+				exception++;
 			}
 		</script>
 	</body>
