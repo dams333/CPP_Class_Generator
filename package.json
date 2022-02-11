@@ -2,7 +2,7 @@
 	"name": "cppclassgenerator",
 	"displayName": "42 C++ Orthodox Canonical Form Class Generator",
 	"description": "Automatic generation of C++ classes in orthodox canonical form for 42's projects",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"publisher": "Damien Hubleur",
 	"license: ": "SEE LICENSE IN license.txt",
 	"icon": "resources/logo.png",
@@ -11,7 +11,7 @@
 		"url": "https://github.com/dams333/CPP_Class_Generator"
 	},
 	"engines": {
-		"vscode": "^1.63.0"
+		"vscode": "^1.64.0"
 	},
 	"categories": [
 		"Formatters",
@@ -67,7 +67,6 @@
 		"webpack-cli": "^4.9.1"
 	},
 	"dependencies": {
-		"vsce": "^2.6.7",
-		"vscode": "^1.1.37"
+		"vsce": "^2.6.7"
 	}
 }
