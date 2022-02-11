@@ -218,7 +218,7 @@ export function getGuiHtml() {
 			</div>
 			<br>
 			<label class="label6">Operator << overload format (use \${fieldName} to use fields in the format):</label> <br>
-			<input type="text" class="input-format" id="format" placeholder="Format"/><br>
+			<input type="text" class="input-format" id="format-operator" placeholder="Format"/><br>
 			<br>
 			<label class="label5">Generate constructor/destructor debug messages: <input type="checkbox" id="generateDebug"/></label>
 			<br>
@@ -227,7 +227,7 @@ export function getGuiHtml() {
 		<script>
 			let field = 0;
 			let exception = 0;
-			//const vscode = acquireVsCodeApi();
+			const vscode = acquireVsCodeApi();
 			function generate() {
 				let fieldsList = [];
 				if(document.getElementById("className").value == ""){
@@ -236,6 +236,7 @@ export function getGuiHtml() {
 					});
 					return ;
 				}
+				let j = 0;
 				for(let i = 0; i < field; i++){
 					if(document.getElementById("field_type_" + i).value == "" && document.getElementById("field_name_" + i).value == "")
 					{
@@ -271,8 +272,10 @@ export function getGuiHtml() {
 							defaultValue = document.getElementById("field_default_" + i).value;
 						}
 					}
-					fieldsList[i] = {field_type: document.getElementById("field_type_" + i).value, field_name: document.getElementById("field_name_" + i).value, default: defaultValue, getter: document.getElementById("field_getter_" + i).checked, setter: document.getElementById("field_setter_" + i).checked};
+					fieldsList[j] = {field_type: document.getElementById("field_type_" + i).value, field_name: document.getElementById("field_name_" + i).value, default: defaultValue, getter: document.getElementById("field_getter_" + i).checked, setter: document.getElementById("field_setter_" + i).checked};
+					j++;
 				}
+				j = 0;
 				let exceptionsList = [];
 				for(let i = 0; i < exception; i++){
 					if(document.getElementById("exception_name_" + i).value == "" && document.getElementById("exception_what_" + i).value == "")
@@ -286,15 +289,16 @@ export function getGuiHtml() {
 						});
 						return ;
 					}
-					exceptionsList[i] = {exception_name: document.getElementById("exception_name_" + i).value, exception_what: document.getElementById("exception_what_" + i).value};
+					exceptionsList[j] = {exception_name: document.getElementById("exception_name_" + i).value, exception_what: document.getElementById("exception_what_" + i).value};
+					j++;
 				}
 				vscode.postMessage({
 					type: "generate",
 					className: document.getElementById('className').value,
 					fields: fieldsList,
-				  exceptions: exceptionsList,
+					classExceptions: exceptionsList,
 					debug: document.getElementById('generateDebug').checked,
-					format: document.getElementById('format').value
+					format: document.getElementById('format-operator').value
 				});
 			}
 			function addField() {

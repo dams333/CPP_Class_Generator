@@ -100,3 +100,23 @@ export function getCppGettersSetters(message: any)
 	}
 	return text;
 }
+
+export function getCppStreamOperator(message: any)
+{
+	let text = "";
+	if(message.format !== "")
+	{
+		let format = message.format;
+		for(let i = 0; i < message.fields.length; i++)
+		{
+			let toReplace = "${" + message.fields[i].field_name + "}";
+			let replacement = "\" << object.get" + message.fields[i].field_name[0].toUpperCase() + message.fields[i].field_name.slice(1) + "()" + " << \"";
+			format = format.replaceAll(toReplace, replacement);
+		}
+		text += "\n\n// Stream operators\n";
+		text += "std::ostream & operator<<(std::ostream &stream, const " + message.className + " &object)\n{\n";
+		text += "\tstream << \"" + format + "\" << std::endl;\n";
+		text += "\treturn stream;\n}\n";
+	}
+	return text;
+}

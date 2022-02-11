@@ -10,7 +10,6 @@
 - Automaticaly add 42 header
 - Give the choice to create constructors with only certain fields
 - Inheritance managing
-- << Operator overload
 - Class' excpetions
 - All the features that I find useful ;)
 # Documentation

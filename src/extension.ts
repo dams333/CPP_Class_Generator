@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { getGuiHtml } from './GuiGenerator';
-import { getHppConstructors, getHppDestructors, getHppOperators, getHppGettersSetters, getHppPrivate } from './HppGenerator';
-import { getCppConstructors, getCppDestructors, getCppOperators, getCppGettersSetters } from './CppGenerators';
+import { getHppConstructors, getHppDestructors, getHppOperators, getHppGettersSetters, getHppPrivate, getHppStreamOperator } from './HppGenerator';
+import { getCppConstructors, getCppDestructors, getCppOperators, getCppGettersSetters, getCppStreamOperator } from './CppGenerators';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -29,6 +29,10 @@ export function activate(context: vscode.ExtensionContext) {
 				{
 					vscode.window.showErrorMessage('One of the field is incomplete');
 				}
+				if(message.type === "error3")
+				{
+					vscode.window.showErrorMessage('One of the exeption is incomplete');
+				}
 				if(message.type === "generate")
 				{
 					console.log("Start generating class " + message.className);
@@ -50,6 +54,7 @@ export function activate(context: vscode.ExtensionContext) {
 							text += getHppPrivate(message);
 							text += "\t\t\n";
 							text += "};\n\n";
+							text += getHppStreamOperator(message);
 							text += "#endif";
 
 							const newFile = vscode.Uri.parse('untitled:' + path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, message.className + ".hpp"));
@@ -71,6 +76,7 @@ export function activate(context: vscode.ExtensionContext) {
 							text += getCppDestructors(message);
 							text += getCppOperators(message);
 							text += getCppGettersSetters(message);
+							text += getCppStreamOperator(message);
 							
 							const newFile = vscode.Uri.parse('untitled:' + path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, message.className + ".cpp"));
 							vscode.workspace.openTextDocument(newFile).then(document => {

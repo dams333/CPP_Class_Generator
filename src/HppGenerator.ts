@@ -62,3 +62,14 @@ export function getHppPrivate(message: any)
 	}
 	return text;
 }
+
+export function getHppStreamOperator(message: any)
+{
+	let text = "";
+	if(message.format !== "")
+	{
+		text += "// Stream operators\n";
+		text += "std::ostream & operator<<(std::ostream &stream, const " + message.className + " &object);\n\n";
+	}
+	return text;
+}
