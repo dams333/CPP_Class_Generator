@@ -126,6 +126,22 @@
 				height: 12px;
 				margin-left: 5%;
 			}
+			.exception-input{
+				background-color: Transparent;
+				background-repeat:no-repeat;
+				border: 1px solid #008CBA;
+				color: #ffffff;
+				overflow: absolute;
+				outline:none;
+				padding: 12px;
+				text-align: center;
+				text-decoration: none;
+				display: inline;
+				font-size: 22px;
+				width: 60%;
+				height: 12px;
+				margin-left: 5%;
+			}
 			.label{
 				color: #ffffff;
 				text-align: center;
@@ -178,6 +194,14 @@
 				margin-left: calc(50% - 250px);
 				margin-top: 20px;
 			}
+			.label7{
+				color: #ffffff;
+				text-align: center;
+				font-family: "Arial";
+				font-size: 17px;
+				margin-left: calc(25% - 100px);
+				margin-top: 20px;
+			}
 		</style>
 	</head>
 	<body>
@@ -187,8 +211,11 @@
 			<div class="button2" onclick="addField()">Add a field</div>
 			<div id="fields">
 			</div>
+			<div class="button2" onclick="addException()">Add a class exception</div>
+			<div id="exceptions">
+			</div>
 			<br>
-			<label class="label6">Format << operator overload (use ${fieldName} to use field in the format):</label> <br>
+			<label class="label6">Operator << overload format (use ${fieldName} to use field in the format):</label> <br>
 			<input type="text" class="input-format" id="format" placeholder="Format"/><br>
 			<br>
 			<label class="label5">Generate constructor/destructor debug messages: <input type="checkbox" id="generateDebug"/></label>
@@ -197,6 +224,7 @@
 		</form>
 		<script>
 			let field = 0;
+			let exception = 0;
 			//const vscode = acquireVsCodeApi();
 			function generate() {
 				let fieldsList = [];
@@ -301,6 +329,34 @@
 				sub2.appendChild(check2);
 				div.appendChild(sub2);
 				field++;
+			}
+			function addException() {
+				let div = document.createElement("div");
+				div.className = "field";
+				document.getElementById('exceptions').appendChild(div);
+				let label = document.createElement("label");
+				label.className = "label2";
+				label.innerHTML = "Exception name:";
+				div.appendChild(label);
+				label = document.createElement("label");
+				label.className = "label7";
+				label.innerHTML = "Exception what():";
+				div.appendChild(label);
+				let br = document.createElement("br");
+				div.appendChild(br);
+				let type = document.createElement("input");
+				type.className = "type-input";
+				type.type = "text";
+				type.id = "eception_name_" + exception;
+				type.placeholder = "Name";
+				div.appendChild(type);
+				let name = document.createElement("input");
+				name.className = "exception-input";
+				name.type = "text";
+				name.id = "exception_what_" + exception;
+				name.placeholder = "what";
+				div.appendChild(name);
+				exception++;
 			}
 		</script>
 	</body>
