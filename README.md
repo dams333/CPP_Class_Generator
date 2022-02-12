@@ -9,7 +9,9 @@
 - Inheritance managing
 - All the features that I find useful ;)
 # Documentation
-- The extension is available on https://marketplace.visualstudio.com/items?itemName=DamienHubleur.cppclassgenerator
+- The extension is available on:
+	- https://marketplace.visualstudio.com/items?itemName=DamienHubleur.cppclassgenerator
+	- https://open-vsx.org/extension/DamienHubleur/cppclassgenerator
 - Open the generator pannel with the command `open C++ orthodox canonical class generator`
 - Choose a class name (like `MySuperClass`)
 - You can add all the fields you want 
