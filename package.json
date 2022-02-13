@@ -37,7 +37,27 @@
 				"command": "cppclassgenerator.openPannel",
 				"title": "Open C++ orthodox canonical class generator"
 			}
-		]
+		],
+		"configuration": {
+			"title": "C++ Class generator",
+			"properties": {
+			  "cppclassgenerator.defaultGetter": {
+				"type": "boolean",
+				"default": true,
+				"description": "Is the \"create a getter\" box checked by default."
+			  },
+			  "cppclassgenerator.defaultSetter": {
+				"type": "boolean",
+				"default": false,
+				"description": "Is the \"create a setter\" box checked by default."
+			  },
+			  "cppclassgenerator.defaultDebug": {
+				"type": "boolean",
+				"default": true,
+				"description": "Is the \"generate debug messages\" box checked by default."
+			  }
+			}
+		  }
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run package",

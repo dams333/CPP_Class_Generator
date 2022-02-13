@@ -1,4 +1,5 @@
-export function getGuiHtml() {
+export function getGuiHtml(getter: any, setter: any, debug: any) {
+	let checkedDebug = debug ? "checked" : "";
     let guiHTML =  `
     <!DOCTYPE html>
     <html lang="en">
@@ -220,7 +221,7 @@ export function getGuiHtml() {
 			<label class="label6">Operator << overload format (use \${fieldName} to use fields in the format):</label> <br>
 			<input type="text" class="input-format" id="format-operator" placeholder="Format"/><br>
 			<br>
-			<label class="label5">Generate constructor/destructor debug messages: <input type="checkbox" id="generateDebug"/></label>
+			<label class="label5">Generate constructor/destructor debug messages: <input type="checkbox" id="generateDebug" ` + checkedDebug + `></label>
 			<br>
 			<div class="button" onclick="generate()">Generate</div>
 		</form>
@@ -340,7 +341,7 @@ export function getGuiHtml() {
 				let check1 = document.createElement("input");
 				check1.type = "checkbox";
 				check1.id = "field_getter_" + field;
-				check1.defaultChecked = true;
+				check1.defaultChecked = ` + getter + `;
 				sub1.appendChild(check1);
 				let sub2 = document.createElement("label");
 				sub2.className = "label3";
@@ -348,6 +349,7 @@ export function getGuiHtml() {
 				let check2 = document.createElement("input");
 				check2.type = "checkbox";
 				check2.id = "field_setter_" + field;
+				check2.defaultChecked = ` + setter + `;
 				sub2.appendChild(check2);
 				div.appendChild(sub2);
 				field++;

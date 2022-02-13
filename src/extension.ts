@@ -18,7 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
 				enableScripts: true,
 			}
 		);
-		onePanel.webview.html = getGuiHtml();
+		onePanel.webview.html = getGuiHtml(vscode.workspace.getConfiguration('cppclassgenerator').get("defaultGetter"), vscode.workspace.getConfiguration('cppclassgenerator').get("defaultSetter"), vscode.workspace.getConfiguration('cppclassgenerator').get("defaultDebug"));
 		onePanel.webview.onDidReceiveMessage(
 			async (message: any) => {
 				if(message.type === "error")
