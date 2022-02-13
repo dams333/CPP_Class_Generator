@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.1 - Not Published
+## 1.1.1 - 13/02/2022
 
 - Add settings for default value of checkbox
 - Update documentation with GIF examples
