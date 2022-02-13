@@ -2,7 +2,7 @@
 	"name": "cppclassgenerator",
 	"displayName": "42 C++ Orthodox Canonical Form Class Generator",
 	"description": "Automatic generation of C++ classes in orthodox canonical form for 42's projects",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"publisher": "DamienHubleur",
 	"license: ": "SEE LICENSE IN license.txt",
 	"icon": "resources/logo.png",
