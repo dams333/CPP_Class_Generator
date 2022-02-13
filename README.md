@@ -30,9 +30,9 @@
 ---
 ## Examples
 - Default generator (Errors are false positive detected by VScode but that's compile)
-![Default](https://github.com/dams333/CPP_Class_Generator/raw/dev/resources/defaultGenerator.gif)
+![Default](https://github.com/dams333/CPP_Class_Generator/raw/master/resources/defaultGenerator.gif)
 - Complete all generator fields
-![Default](https://github.com/dams333/CPP_Class_Generator/raw/dev/resources/completeGenerator.gif)
+![Default](https://github.com/dams333/CPP_Class_Generator/raw/master/resources/completeGenerator.gif)
 ---
 ## Settings
 - "cppclassgenerator.defaultGetter" used to choose if the box "generate getter" is default checked
