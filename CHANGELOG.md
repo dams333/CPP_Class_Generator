@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1 - Not Published
+
+- Add settings for default value of checkbox
+- Update documentation with GIF examples
+- Sync README/CHANGELOG/manifest/... between VScodeStore, open-vsx and github
+
 ## 1.1.0 - 11/02/2022
 
 - Add the choice to create or not getters and setters
