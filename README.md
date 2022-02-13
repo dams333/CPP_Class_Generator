@@ -2,6 +2,9 @@
 - [Table of content](#table-of-content)
 - [Road Map](#roadmap)
 - [Documentation](#documentation)
+	- [Generator Pannel](#generator-pannel)
+	- [Examples](#examples)
+	- [Settings](#settings)
 - [Contributing](#contributing)
 # RoadMap
 - Automaticaly add 42 header
@@ -9,6 +12,7 @@
 - Inheritance managing
 - All the features that I find useful ;)
 # Documentation
+## Generator pannel
 - The extension is available on:
 	- https://marketplace.visualstudio.com/items?itemName=DamienHubleur.cppclassgenerator
 	- https://open-vsx.org/extension/DamienHubleur/cppclassgenerator
@@ -23,6 +27,16 @@
 	- Precise whatever you want in the `what` function
 - If you fill it, you cann add the overload of the `<<` operator (use the precised format to print some field in the message)
 - You can generate debug message in constructor/destructor if the subject ask it
-
+---
+## Examples
+- Default generator (Errors are false positive detected by VScode but that's compile)
+![Default](resources/defaultGenerator.gif)
+- Complete all generator fields
+![Default](resources/completeGenerator.gif)
+---
+## Settings
+- "cppclassgenerator.defaultGetter" used to choose if the box "generate getter" is default checked
+- "cppclassgenerator.defaultSetter" used to choose if the box "generate setter" is default checked
+- "cppclassgenerator.defaultDebug" used to choose if the box "generate debug messages" is default checked
 # Contributing
 PR are welcome on Github to propose an improvement 
